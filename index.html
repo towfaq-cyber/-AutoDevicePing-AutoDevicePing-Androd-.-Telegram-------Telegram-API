@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>نظام النتائج</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial; margin: 40px; text-align: center; }
+        .box { background: #f0f8ff; padding: 20px; margin: 20px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🚀 النظام جاهز للعمل</h1>
+    
+    <div class="box">
+        <h2>📱 تطبيق Android</h2>
+        <a href="https://github.com/towfaq-cyber/AutoDevicePing/releases/download/v1.1.0/MyApp.apk" 
+           download style="font-size: 20px;">
+            ⬇️ تحميل MyApp.apk
+        </a>
+    </div>
+
+    <div class="box">
+        <h2>📊 نتائج مباشرة</h2>
+        <div id="results">جاري التحميل...</div>
+    </div>
+
+    <script>
+    // تحديث النتائج
+    function updateResults() {
+        const data = {
+            time: new Date().toLocaleString('ar-SA'),
+            status: 'نشط',
+            version: 'v1.1.0'
+        };
+        
+        document.getElementById('results').innerHTML = `
+            <p><strong>الوقت:</strong> ${data.time}</p>
+            <p><strong>الحالة:</strong> ${data.status}</p>
+            <p><strong>الإصدار:</strong> ${data.version}</p>
+        `;
+    }
+    
+    setInterval(updateResults, 5000);
+    updateResults();
+    </script>
+</body>
+</html>
