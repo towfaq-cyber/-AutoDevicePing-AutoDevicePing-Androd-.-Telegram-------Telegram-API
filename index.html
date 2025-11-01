@@ -1,67 +1,268 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <title>نظام النتائج</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام النتائج - AutoDevicePing</title>
     <style>
-        body { font-family: Arial; margin: 40px; text-align: center; }
-        .box { background: #f0f8ff; padding: 20px; margin: 20px; border-radius: 10px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .nav-menu {
+            background: rgba(255,255,255,0.95);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .box h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .results-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-active {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .version {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: white;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .box {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>🚀 النظام جاهز للعمل</h1>
-    
-    <div class="box">
-        <h2>📱 تطبيق Android</h2>
-        <a href="https://github.com/towfaq-cyber/AutoDevicePing/releases/download/v1.1.0/MyApp.apk" 
-           download style="font-size: 20px;">
-            ⬇️ تحميل MyApp.apk
-        </a>
-    </div>
-
-    <div class="box">
-        <h2>📊 نتائج مباشرة</h2>
-        <div id="results">جاري التحميل...</div>
+    <div class="container">
+        <header>
+            <h1>🚀 نظام AutoDevicePing جاهز للعمل</h1>
+            <p>نظام متكامل لمراقبة الأجهزة وإدارة النتائج</p>
+        </header>
+        
+        <nav class="nav-menu">
+            <ul class="nav-links">
+                <li><a href="#android">تطبيق Android</a></li>
+                <li><a href="#results">النتائج المباشرة</a></li>
+                <li><a href="#telegram">ربط Telegram</a></li>
+                <li><a href="#api">Telegram API</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            <section class="box" id="android">
+                <h2>📱 تطبيق Android</h2>
+                <p>قم بتحميل التطبيق الخاص بنا لنظام Android</p>
+                <a href="https://github.com/towfaq-cyber/AutoDevicePing/releases/download/v1.1.0/MyApp.apk" 
+                   download 
+                   class="download-btn">
+                    ⬇️ تحميل MyApp.apk
+                </a>
+            </section>
+            
+            <section class="box" id="results">
+                <h2>📊 النتائج المباشرة</h2>
+                <div class="results-container">
+                    <div id="results-content">جاري تحميل النتائج...</div>
+                </div>
+            </section>
+            
+            <section class="box" id="telegram">
+                <h2>📱 ربط Telegram</h2>
+                <p>ربط نظامك مع بوت Telegram للحصول على الإشعارات</p>
+                <!-- إضافة محتوى الربط مع Telegram هنا -->
+            </section>
+            
+            <section class="box" id="api">
+                <h2>🔗 Telegram API</h2>
+                <p>تفاصيل واجهة برمجة التطبيقات الخاصة بـ Telegram</p>
+                <!-- إضافة محتوى API هنا -->
+            </section>
+        </main>
+        
+        <footer>
+            <p>تم التطوير بواسطة توفيق سايبر &copy; 2024</p>
+        </footer>
     </div>
 
     <script>
-    // تحديث النتائج
-    function updateResults() {
-        const data = {
-            time: new Date().toLocaleString('ar-SA'),
-            status: 'نشط',
-            version: 'v1.1.0'
-        };
+        // تحديث النتائج بشكل دوري
+        function updateResults() {
+            const data = {
+                time: new Date().toLocaleString('ar-SA'),
+                status: 'نشط',
+                version: 'v1.1.0',
+                devices: 5,
+                lastPing: new Date().toLocaleTimeString('ar-SA')
+            };
+            
+            document.getElementById('results-content').innerHTML = `
+                <div class="result-item">
+                    <span>الوقت:</span>
+                    <strong>${data.time}</strong>
+                </div>
+                <div class="result-item">
+                    <span>الحالة:</span>
+                    <span class="status-active">${data.status}</span>
+                </div>
+                <div class="result-item">
+                    <span>الإصدار:</span>
+                    <span class="version">${data.version}</span>
+                </div>
+                <div class="result-item">
+                    <span>عدد الأجهزة:</span>
+                    <strong>${data.devices}</strong>
+                </div>
+                <div class="result-item">
+                    <span>آخر ping:</span>
+                    <strong>${data.lastPing}</strong>
+                </div>
+            `;
+        }
         
-        document.getElementById('results').innerHTML = `
-            <p><strong>الوقت:</strong> ${data.time}</p>
-            <p><strong>الحالة:</strong> ${data.status}</p>
-            <p><strong>الإصدار:</strong> ${data.version}</p>
-        `;
-    }
-    
-    setInterval(updateResults, 5000);
-    updateResults();
+        // تحديث النتائج كل 5 ثواني
+        setInterval(updateResults, 5000);
+        
+        // التشغيل الأولي
+        updateResults();
+        
+        // إضافة تأثير سلس للتنقل بين الأقسام
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </body>
-</html>
-يوم السبيت 1/11
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>تطبيق AutoDevicePing – ناكر</title>
-  <style>
-    body { font-family: sans-serif; background: #f9f9f9; text-align: center; padding: 50px; }
-    .box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px #ccc; max-width: 600px; margin: auto; }
-    a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 5px; }
-  </style>
-</head>
-<body>
-  <div class="box">
-    <h1>تطبيق AutoDevicePing</h1>
-    <p>مرحبا بك في الصفحة الرسمية للتطبيق الذي طوره ناكر ضمن مشروع Towfaq Cyber.</p>
-    <a href="https://github.com/towfaq-cyber/AutoDevicePing/releases/download/v1.1.0/MyApp.apk">تحميل التطبيق الآن</a>
-  </div>
-</body>
-</html>
+                    </html>
