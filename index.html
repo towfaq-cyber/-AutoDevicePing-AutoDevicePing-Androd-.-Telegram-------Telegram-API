@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام النتائج - AutoDevicePing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .box {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .nav-links li {
+            display: inline-block;
+        }
+        .nav-links a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .nav-links a:hover {
+            background: #3498db;
+            color: white;
+        }
+        #results-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: right;
+        }
+        .status-active {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .version-badge {
+            background: #ff6b35;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 نظام AutoDevicePing <span class="version-badge">v2.2.2</span></h1>
+            <p>نظام مراقبة الأجهزة - الإصدار 2.2.2 مع ميزات محسنة</p>
+        </header>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#android">التطبيق</a></li>
+                <li><a href="#results">النتائج</a></li>
+                <li><a href="#features">الميزات</a></li>
+                <li><a href="#about">حول</a></li>
+            </ul>
+        </nav>
+
+        <div class="box" id="android">
+            <h2>📱 تطبيق Android</h2>
+            <p>قم بتحميل التطبيق الجديد لنظام Android - الإصدار 2.2.2</p>
+            <a href="https://github.com/towfaq-cyber/AutoDevicePing/releases/download/v2.2.2/MyApp.apk" 
+               download 
+               class="download-btn">
+                ⬇️ تحميل MyApp.apk v2.2.2
+            </a>
+            <p style="color: #666; margin-top: 10px; font-size: 14px;">
+                الإصدار 2.2.2 يحتوي على تحسينات في الأداء وإصلاح للأخطاء
+            </p>
+        </div>
+
+        <div class="box" id="results">
+            <h2>📊 النتائج المباشرة</h2>
+            <div id="results-content">
+                <p>جاري تحميل البيانات...</p>
+            </div>
+        </div>
+
+        <div class="box" id="features">
+            <h2>✨ الميزات الجديدة</h2>
+            <div style="text-align: right; margin-top: 15px;">
+                <p>✅ تحسين أداء المراقبة</p>
+                <p>✅ واجهة مستخدم محسنة</p>
+                <p>✅ إصلاح مشاكل الاستقرار</p>
+                <p>✅ تحسين استهلاك البطارية</p>
+                <p>✅ إضافة تقارير مفصلة</p>
+            </div>
+        </div>
+
+        <div class="box" id="about">
+            <h2>ℹ️ حول النظام</h2>
+            <p>تم التطوير بواسطة: توفيق سايبر</p>
+            <p>الإصدار: <strong>v2.2.2</strong></p>
+            <p>تاريخ الإصدار: 2024</p>
+            <p>آخر تحديث: الإصدار 2.2.2</p>
+        </div>
+    </div>
+
+    <script>
+        function updateResults() {
+            const data = {
+                time: new Date().toLocaleString('ar-SA'),
+                status: '🟢 نشط',
+                version: 'v2.2.2',
+                devices: 5,
+                pingTime: '45ms',
+                uptime: '99.8%'
+            };
+            
+            document.getElementById('results-content').innerHTML = `
+                <p><strong>الوقت:</strong> ${data.time}</p>
+                <p><strong>الحالة:</strong> <span class="status-active">${data.status}</span></p>
+                <p><strong>الإصدار:</strong> <strong>${data.version}</strong></p>
+                <p><strong>الأجهزة المتصلة:</strong> ${data.devices}</p>
+                <p><strong>وقت الاستجابة:</strong> ${data.pingTime}</p>
+                <p><strong>معدل التشغيل:</strong> ${data.uptime}</p>
+            `;
+        }
+        
+        setInterval(updateResults, 3000);
+        updateResults();
+    </script>
+</body>
+                </html>
