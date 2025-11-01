@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام النتائج - AutoDevicePing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .download-btn {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .download-btn:hover {
+            background: #219a52;
+        }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .nav-links li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .nav-links a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 نظام AutoDevicePing</h1>
+            <p>نظام مراقبة الأجهزة - الإصدار 1.1.0</p>
+        </header>
+
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#android">التطبيق</a></li>
+                <li><a href="#results">النتائج</a></li>
+                <li><a href="#about">حول</a></li>
+            </ul>
+        </nav>
+
+        <div class="box" id="android">
+            <h2>📱 تطبيق Android</h2>
+            <p>قم بتحميل التطبيق لنظام Android</p>
+            <a href="https://github.com/towfaq-cyber/AutoDevicePing/releases/download/v1.1.0/MyApp.apk" 
+               download 
+               class="download-btn">
+                ⬇️ تحميل MyApp.apk
+            </a>
+            <p style="color: #666; margin-top: 10px; font-size: 14px;">
+                إذا ظهر خطأ 404، تأكد من وجود الملف في قسم Releases
+            </p>
+        </div>
+
+        <div class="box" id="results">
+            <h2>📊 النتائج المباشرة</h2>
+            <div id="results-content">
+                <p>جاري تحميل البيانات...</p>
+            </div>
+        </div>
+
+        <div class="box" id="about">
+            <h2>ℹ️ حول النظام</h2>
+            <p>تم التطوير بواسطة: توفيق سايبر</p>
+            <p>الإصدار: v1.1.0</p>
+            <p>آخر تحديث: 2024</p>
+        </div>
+    </div>
+
+    <script>
+        function updateResults() {
+            const data = {
+                time: new Date().toLocaleString('ar-SA'),
+                status: '🟢 نشط',
+                version: 'v1.1.0',
+                devices: 3
+            };
+            
+            document.getElementById('results-content').innerHTML = `
+                <p><strong>الوقت:</strong> ${data.time}</p>
+                <p><strong>الحالة:</strong> ${data.status}</p>
+                <p><strong>الإصدار:</strong> ${data.version}</p>
+                <p><strong>الأجهزة المتصلة:</strong> ${data.devices}</p>
+            `;
+        }
+        
+        setInterval(updateResults, 3000);
+        updateResults();
+    </script>
+</body>
+</html>
